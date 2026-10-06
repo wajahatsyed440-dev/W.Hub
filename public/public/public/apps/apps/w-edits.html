@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>W.Edits</title>
+
+<style>
+
+*{
+ box-sizing:border-box;
+}
+
+body{
+ margin:0;
+ background:#080a0f;
+ color:#fff;
+ font-family:Arial,sans-serif;
+}
+
+header{
+ height:60px;
+ display:flex;
+ align-items:center;
+ gap:8px;
+ padding:0 15px;
+ background:#111722;
+ border-bottom:1px solid #293143;
+}
+
+button{
+ border:0;
+ border-radius:10px;
+ padding:9px 13px;
+ background:#1b2230;
+ color:#fff;
+ cursor:pointer;
+}
+
+button:hover{
+ background:#293348;
+}
+
+main{
+ height:calc(100vh - 60px);
+ display:grid;
+ grid-template-columns:70px 1fr 270px;
+}
+
+.tools{
+ background:#0d1118;
+ padding:10px;
+}
+
+.tools button{
+ width:100%;
+ margin-bottom:8px;
+ font-size:18px;
+}
+
+.center{
+ display:flex;
+ flex-direction:column;
+ min-width:0;
+}
+
+.preview{
+ flex:1;
+ display:grid;
+ place-items:center;
+ background:
+ radial-gradient(
+  circle,
+  #273149,
+  #090c12 70%
+ );
+ overflow:hidden;
+}
+
+#previewImage{
+ max-width:90%;
+ max-height:80%;
+ display:none;
+}
+
+.placeholder{
+ color:#6e788c;
+ font-size:20px;
+}
+
+.timeline{
+ height:170px;
+ padding:12px;
+ background:#0d1118;
+ border-top:1px solid #293143;
+ overflow:auto;
+}
+
+.track{
+ height:40px;
+ display:flex;
+ align-items:center;
+ gap:5px;
+ margin-bottom:7px;
+ padding:4px;
+ border-radius:8px;
+ background:#171d29;
+}
+
+.clip{
+ min-width:180px;
+ padding:9px;
+ border-radius:7px;
+ background:
+ linear-gradient(
+  90deg,
+  #7c3aed,
+  #2563eb
+ );
+}
+
+.inspector{
+ padding:18px;
+ border-left:1px solid #293143;
+ background:#0d1118;
+}
+
+.control{
+ margin:20px 0;
+}
+
+.control label{
+ display:block;
+ color:#aab3c3;
+ font-size:12px;
+ margin-bottom:8px;
+}
+
+input[type=range]{
+ width:100%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<strong>
+W.Edits
+</strong>
+
+<button onclick="importMedia()">
+Import
+</button>
+
+<button onclick="addClip()">
+Add clip
+</button>
+
+<button onclick="addText()">
+Add text
+</button>
+
+<button onclick="exportFrame()">
+Export frame
+</button>
+
+<input
+ id="file"
+ type="file"
+ accept="image/*,video/*"
+ hidden>
+
+</header>
+
+
+<main>
+
+<aside class="tools">
+
+<button>
+↖
+</button>
+
+<button onclick="addClip()">
+✂
+</button>
+
+<button onclick="addText()">
+T
+</button>
+
+<button onclick="importMedia()">
+▣
+</button>
+
+<button>
+♪
+</button>
+
+<button>
+✦
+</button>
+
+</aside>
+
+
+<section class="center">
+
+<div class="preview">
+
+<div
+ id="placeholder"
+ class="placeholder">
+
+Import media to begin
+
+</div>
+
+<img
+ id="previewImage">
+
+</div>
+
+
+<div class="timeline">
+
+<div
+ id="videoTrack"
+ class="track">
+
+<div class="clip">
+Video
+</div>
+
+</div>
+
+
+<div
+ id="textTrack"
+ class="track">
+
+</div>
+
+
+<div class="track">
+
+<div
+ class="clip"
+ style="
+ background:
+ linear-gradient(
+  90deg,
+  #0891b2,
+  #2563eb
+ );">
+
+Audio
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<aside class="inspector">
+
+<h2>
+Inspector
+</h2>
+
+<div class="control">
+
+<label>
+Scale
+</label>
+
+<input
+ id="scale"
+ type="range"
+ min="50"
+ max="150"
+ value="100"
+ oninput="updateImage()">
+
+</div>
+
+
+<div class="control">
+
+<label>
+Opacity
+</label>
+
+<input
+ id="opacity"
+ type="range"
+ min="0"
+ max="100"
+ value="100"
+ oninput="updateImage()">
+
+</div>
+
+</aside>
+
+</main>
+
+
+<script>
+
+const file =
+ document.getElementById(
+  "file"
+ );
+
+const preview =
+ document.getElementById(
+  "previewImage"
+ );
+
+const placeholder =
+ document.getElementById(
+  "placeholder"
+ );
+
+
+let currentFile = null;
+
+
+function importMedia(){
+
+ file.click();
+
+}
+
+
+file.addEventListener(
+ "change",
+ event => {
+
+  const selected =
+   event.target.files[0];
+
+  if(!selected)return;
+
+  currentFile =
+   selected;
+
+  if(
+   selected.type
+    .startsWith("image/")
+  ){
+
+   const url =
+    URL.createObjectURL(
+     selected
+    );
+
+   preview.src =
+    url;
+
+   preview.style.display =
+    "block";
+
+   placeholder.style.display =
+    "none";
+
+  }else{
+
+   preview.style.display =
+    "none";
+
+   placeholder.textContent =
+    "Video imported: " +
+    selected.name;
+
+  }
+
+ }
+);
+
+
+function updateImage(){
+
+ const scale =
+  Number(
+   document.getElementById(
+    "scale"
+   ).value
+  ) / 100;
+
+ const opacity =
+  Number(
+   document.getElementById(
+    "opacity"
+   ).value
+  ) / 100;
+
+
+ preview.style.transform =
+  "scale("+
+  scale+
+  ")";
+
+ preview.style.opacity =
+  opacity;
+
+}
+
+
+function addClip(){
+
+ const clip =
+  document.createElement(
+   "div"
+  );
+
+ clip.className =
+  "clip";
+
+ clip.textContent =
+  "New clip";
+
+ document
+  .getElementById(
+   "videoTrack"
+  )
+  .appendChild(
+   clip
+  );
+
+}
+
+
+function addText(){
+
+ const clip =
+  document.createElement(
+   "div"
+  );
+
+ clip.className =
+  "clip";
+
+ clip.style.background =
+  "linear-gradient(90deg,#9333ea,#db2777)";
+
+ clip.textContent =
+  "Text";
+
+ document
+  .getElementById(
+   "textTrack"
+  )
+  .appendChild(
+   clip
+  );
+
+}
+
+
+function exportFrame(){
+
+ if(
+  !currentFile ||
+  !currentFile.type
+   .startsWith("image/")
+ ){
+
+  alert(
+   "Import an image to export a frame."
+  );
+
+  return;
+
+ }
+
+
+ const canvas =
+  document.createElement(
+   "canvas"
+  );
+
+ const image =
+  new Image();
+
+ image.onload = () => {
+
+  canvas.width =
+   image.naturalWidth;
+
+  canvas.height =
+   image.naturalHeight;
+
+  const ctx =
+   canvas.getContext(
+    "2d"
+   );
+
+  const scale =
+   Number(
+    document.getElementById(
+     "scale"
+    ).value
+   ) / 100;
+
+  const opacity =
+   Number(
+    document.getElementById(
+     "opacity"
+    ).value
+   ) / 100;
+
+  ctx.globalAlpha =
+   opacity;
+
+  ctx.drawImage(
+   image,
+   0,
+   0,
+   image.naturalWidth * scale,
+   image.naturalHeight * scale
+  );
+
+
+  const a =
+   document.createElement(
+    "a"
+   );
+
+  a.download =
+   "W.Edits-frame.png";
+
+  a.href =
+   canvas.toDataURL(
+    "image/png"
+   );
+
+  a.click();
+
+ };
+
+
+ image.src =
+  URL.createObjectURL(
+   currentFile
+  );
+
+}
+
+</script>
+
+</body>
+
+</html>
