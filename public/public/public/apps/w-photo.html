@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>W.Photo</title>
+
+<style>
+
+*{
+ box-sizing:border-box;
+}
+
+body{
+ margin:0;
+ background:#080a0f;
+ color:#fff;
+ font-family:Arial,sans-serif;
+}
+
+header{
+ height:60px;
+ display:flex;
+ align-items:center;
+ gap:8px;
+ padding:0 15px;
+ background:#111722;
+ border-bottom:1px solid #293143;
+}
+
+button{
+ border:0;
+ border-radius:10px;
+ padding:9px 13px;
+ background:#1b2230;
+ color:#fff;
+ cursor:pointer;
+}
+
+button:hover{
+ background:#293348;
+}
+
+main{
+ height:calc(100vh - 60px);
+ display:grid;
+ grid-template-columns:70px 1fr 270px;
+}
+
+.tools{
+ background:#0d1118;
+ padding:10px;
+}
+
+.tools button{
+ width:100%;
+ margin-bottom:8px;
+ font-size:18px;
+}
+
+.workspace{
+ display:grid;
+ place-items:center;
+ background:
+ radial-gradient(
+  circle,
+  #273149,
+  #090c12 70%
+ );
+ overflow:hidden;
+}
+
+#canvas{
+ max-width:90%;
+ max-height:90%;
+ background:#111;
+ box-shadow:
+  0 20px 60px rgba(0,0,0,.5);
+}
+
+.inspector{
+ padding:18px;
+ background:#0d1118;
+ border-left:1px solid #293143;
+ overflow:auto;
+}
+
+.control{
+ margin:20px 0;
+}
+
+.control label{
+ display:block;
+ color:#aab3c3;
+ font-size:12px;
+ margin-bottom:8px;
+}
+
+input[type=range]{
+ width:100%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<strong>
+W.Photo
+</strong>
+
+<button onclick="openImage()">
+Import
+</button>
+
+<button onclick="exportImage('png')">
+Export PNG
+</button>
+
+<button onclick="exportImage('jpeg')">
+Export JPG
+</button>
+
+<button onclick="resetImage()">
+Reset
+</button>
+
+<input
+ id="file"
+ type="file"
+ accept="image/*"
+ hidden>
+
+</header>
+
+<main>
+
+<aside class="tools">
+
+<button>
+↖
+</button>
+
+<button onclick="rotate()">
+↻
+</button>
+
+<button onclick="rotateLeft()">
+↺
+</button>
+
+<button onclick="addText()">
+T
+</button>
+
+<button onclick="flip()">
+↔
+</button>
+
+</aside>
+
+
+<section class="workspace">
+
+<canvas
+ id="canvas"
+ width="1200"
+ height="800">
+</canvas>
+
+</section>
+
+
+<aside class="inspector">
+
+<h2>
+Adjust
+</h2>
+
+<div class="control">
+
+<label>
+Brightness
+</label>
+
+<input
+ id="brightness"
+ type="range"
+ min="-100"
+ max="100"
+ value="0"
+ oninput="draw()">
+
+</div>
+
+
+<div class="control">
+
+<label>
+Contrast
+</label>
+
+<input
+ id="contrast"
+ type="range"
+ min="-100"
+ max="100"
+ value="0"
+ oninput="draw()">
+
+</div>
+
+
+<div class="control">
+
+<label>
+Saturation
+</label>
+
+<input
+ id="saturation"
+ type="range"
+ min="-100"
+ max="100"
+ value="0"
+ oninput="draw()">
+
+</div>
+
+
+<div class="control">
+
+<label>
+Blur
+</label>
+
+<input
+ id="blur"
+ type="range"
+ min="0"
+ max="15"
+ value="0"
+ oninput="draw()">
+
+</div>
+
+</aside>
+
+</main>
+
+
+<script>
+
+const canvas =
+ document.getElementById(
+  "canvas"
+ );
+
+const ctx =
+ canvas.getContext("2d");
+
+let image = null;
+
+let angle = 0;
+
+let flipped = false;
+
+
+function openImage(){
+
+ document
+  .getElementById("file")
+  .click();
+
+}
+
+
+document
+ .getElementById("file")
+ .addEventListener(
+  "change",
+  event => {
+
+   const file =
+    event.target.files[0];
+
+   if(!file)return;
+
+   const img =
+    new Image();
+
+   img.onload = () => {
+
+    image = img;
+
+    angle = 0;
+
+    flipped = false;
+
+    draw();
+
+   };
+
+   img.src =
+    URL.createObjectURL(file);
+
+  }
+ );
+
+
+function draw(){
+
+ ctx.clearRect(
+  0,
+  0,
+  canvas.width,
+  canvas.height
+ );
+
+
+ if(!image){
+
+  ctx.fillStyle =
+   "#151b27";
+
+  ctx.fillRect(
+   0,
+   0,
+   canvas.width,
+   canvas.height
+  );
+
+  ctx.fillStyle =
+   "#69758a";
+
+  ctx.font =
+   "28px Arial";
+
+  ctx.textAlign =
+   "center";
+
+  ctx.fillText(
+   "Import an image",
+   canvas.width/2,
+   canvas.height/2
+  );
+
+  return;
+
+ }
+
+
+ const brightness =
+  Number(
+   document.getElementById(
+    "brightness"
+   ).value
+  );
+
+ const contrast =
+  Number(
+   document.getElementById(
+    "contrast"
+   ).value
+  );
+
+ const saturation =
+  Number(
+   document.getElementById(
+    "saturation"
+   ).value
+  );
+
+ const blur =
+  Number(
+   document.getElementById(
+    "blur"
+   ).value
+  );
+
+
+ ctx.save();
+
+ ctx.translate(
+  canvas.width/2,
+  canvas.height/2
+ );
+
+ ctx.rotate(
+  angle * Math.PI / 180
+ );
+
+ ctx.scale(
+  flipped ? -1 : 1,
+  1
+ );
+
+
+ ctx.filter =
+  "brightness("+
+  (100 + brightness)+
+  "%) contrast("+
+  (100 + contrast)+
+  "%) saturate("+
+  (100 + saturation)+
+  "%) blur("+
+  blur+
+  "px)";
+
+
+ const scale =
+  Math.min(
+   canvas.width/image.width,
+   canvas.height/image.height
+  );
+
+
+ const w =
+  image.width * scale;
+
+ const h =
+  image.height * scale;
+
+
+ ctx.drawImage(
+  image,
+  -w/2,
+  -h/2,
+  w,
+  h
+ );
+
+
+ ctx.restore();
+
+}
+
+
+function rotate(){
+
+ angle += 90;
+
+ draw();
+
+}
+
+
+function rotateLeft(){
+
+ angle -= 90;
+
+ draw();
+
+}
+
+
+function flip(){
+
+ flipped = !flipped;
+
+ draw();
+
+}
+
+
+function resetImage(){
+
+ angle = 0;
+
+ flipped = false;
+
+ document.getElementById(
+  "brightness"
+ ).value = 0;
+
+ document.getElementById(
+  "contrast"
+ ).value = 0;
+
+ document.getElementById(
+  "saturation"
+ ).value = 0;
+
+ document.getElementById(
+  "blur"
+ ).value = 0;
+
+ draw();
+
+}
+
+
+function addText(){
+
+ if(!image){
+
+  alert(
+   "Import an image first."
+  );
+
+  return;
+
+ }
+
+ const text =
+  prompt(
+   "Enter text:"
+  );
+
+ if(!text)return;
+
+ draw();
+
+ ctx.save();
+
+ ctx.fillStyle =
+  "white";
+
+ ctx.font =
+  "bold 55px Arial";
+
+ ctx.textAlign =
+  "center";
+
+ ctx.shadowColor =
+  "black";
+
+ ctx.shadowBlur =
+  8;
+
+ ctx.fillText(
+  text,
+  canvas.width/2,
+  canvas.height-70
+ );
+
+ ctx.restore();
+
+}
+
+
+function exportImage(type){
+
+ if(!image){
+
+  alert(
+   "Import an image first."
+  );
+
+  return;
+
+ }
+
+ const mime =
+  type === "png"
+  ? "image/png"
+  : "image/jpeg";
+
+
+ const url =
+  canvas.toDataURL(
+   mime,
+   .92
+  );
+
+
+ const a =
+  document.createElement(
+   "a"
+  );
+
+ a.href = url;
+
+ a.download =
+  "W.Photo-export."+
+  (
+   type === "png"
+   ? "png"
+   : "jpg"
+  );
+
+ a.click();
+
+}
+
+
+draw();
+
+</script>
+
+</body>
+
+</html>
