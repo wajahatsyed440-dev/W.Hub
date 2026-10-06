@@ -1,417 +1,1121 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1">
+<title>W.HUB — Creative Software</title>
 
-<title>W.HUB</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-<link
-  rel="stylesheet"
-  href="/style.css">
+html {
+    scroll-behavior: smooth;
+}
 
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(124,58,237,.22), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(59,130,246,.16), transparent 28%),
+        #07070a;
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: rgba(7,7,10,.78);
+    backdrop-filter: blur(20px);
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: white;
+    text-decoration: none;
+}
+
+.logo span {
+    color: #8b5cf6;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-links button {
+    border: 0;
+    background: transparent;
+    color: #b8b8c2;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.nav-links button:hover {
+    color: white;
+    background: rgba(255,255,255,.07);
+}
+
+.nav-signup {
+    background: white !important;
+    color: #08080b !important;
+    font-weight: 700;
+}
+
+/* HERO */
+
+.hero {
+    max-width: 1200px;
+    margin: auto;
+    padding: 110px 24px 90px;
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(139,92,246,.12);
+    border: 1px solid rgba(139,92,246,.3);
+    color: #c4b5fd;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8b5cf6;
+    box-shadow: 0 0 12px #8b5cf6;
+}
+
+.hero h1 {
+    font-size: clamp(50px, 7vw, 88px);
+    line-height: .95;
+    letter-spacing: -5px;
+    max-width: 760px;
+    margin-bottom: 28px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg,#fff,#a78bfa,#60a5fa);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: #a1a1aa;
+    font-size: 19px;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: 0;
+    padding: 14px 21px;
+    border-radius: 13px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-primary {
+    background: white;
+    color: #08080b;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255,255,255,.15);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,.1);
+}
+
+/* HERO VISUAL */
+
+.hero-card {
+    position: relative;
+    min-height: 390px;
+    border-radius: 28px;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.025)),
+        #101015;
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 30px 80px rgba(0,0,0,.45);
+    overflow: hidden;
+}
+
+.glow {
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    background: #7c3aed;
+    filter: blur(100px);
+    opacity: .35;
+    right: -50px;
+    top: -50px;
+}
+
+.editor-window {
+    position: absolute;
+    inset: 35px;
+    border-radius: 18px;
+    background: #0b0b0f;
+    border: 1px solid rgba(255,255,255,.1);
+    overflow: hidden;
+}
+
+.editor-top {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 15px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.circle {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #444;
+}
+
+.editor-body {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    height: calc(100% - 45px);
+}
+
+.tools {
+    border-right: 1px solid rgba(255,255,255,.08);
+    padding-top: 15px;
+}
+
+.tool {
+    width: 35px;
+    height: 35px;
+    margin: 5px auto;
+    border-radius: 9px;
+    background: rgba(255,255,255,.04);
+}
+
+.canvas-area {
+    padding: 20px;
+}
+
+.fake-canvas {
+    height: 170px;
+    border-radius: 12px;
+    background:
+        linear-gradient(135deg, #7c3aed, #2563eb, #111827);
+    box-shadow: inset 0 0 60px rgba(0,0,0,.25);
+}
+
+.fake-timeline {
+    height: 65px;
+    margin-top: 18px;
+    border-radius: 10px;
+    background: #15151b;
+    padding: 10px;
+}
+
+.timeline-line {
+    height: 12px;
+    border-radius: 5px;
+    background: #7c3aed;
+    margin-bottom: 7px;
+}
+
+.timeline-line:nth-child(2) {
+    width: 70%;
+    background: #2563eb;
+}
+
+/* SECTIONS */
+
+.section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 90px 24px;
+}
+
+.section-header {
+    margin-bottom: 45px;
+}
+
+.eyebrow {
+    color: #8b5cf6;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.section h2 {
+    font-size: 45px;
+    letter-spacing: -2px;
+    margin-bottom: 12px;
+}
+
+.section-header p {
+    color: #92929d;
+    font-size: 17px;
+}
+
+/* PRODUCTS */
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 22px;
+}
+
+.product-card {
+    position: relative;
+    padding: 32px;
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.035);
+    overflow: hidden;
+    transition: .25s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(139,92,246,.35);
+    background: rgba(255,255,255,.055);
+}
+
+.product-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 25px;
+}
+
+.edits-icon {
+    background: linear-gradient(135deg,#7c3aed,#4f46e5);
+}
+
+.photo-icon {
+    background: linear-gradient(135deg,#0ea5e9,#2563eb);
+}
+
+.product-card h3 {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.product-card p {
+    color: #9696a0;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.features {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.features li {
+    color: #c7c7d0;
+    margin: 11px 0;
+}
+
+.features li::before {
+    content: "✓";
+    color: #8b5cf6;
+    font-weight: bold;
+    margin-right: 9px;
+}
+
+.price-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.price {
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: #15151b;
+    border: 1px solid rgba(255,255,255,.08);
+    flex: 1;
+    min-width: 150px;
+}
+
+.price small {
+    display: block;
+    color: #85858f;
+    margin-bottom: 5px;
+}
+
+.price strong {
+    font-size: 20px;
+}
+
+.buy-button {
+    width: 100%;
+    margin-top: 14px;
+}
+
+/* PRICING */
+
+.pricing-box {
+    border-radius: 28px;
+    padding: 55px;
+    background:
+        radial-gradient(circle at 80% 20%,rgba(124,58,237,.22),transparent 30%),
+        #101014;
+    border: 1px solid rgba(255,255,255,.1);
+    text-align: center;
+}
+
+.pricing-box h2 {
+    margin-bottom: 15px;
+}
+
+.pricing-box p {
+    color: #94949f;
+    margin-bottom: 30px;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.09);
+    background: #0d0d11;
+}
+
+.sidebar {
+    padding: 25px;
+    border-right: 1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-item {
+    padding: 12px;
+    border-radius: 10px;
+    color: #888894;
+    margin-bottom: 5px;
+}
+
+.sidebar-item.active {
+    color: white;
+    background: rgba(139,92,246,.15);
+}
+
+.dashboard-content {
+    padding: 35px;
+}
+
+.dashboard-content h3 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.dashboard-content p {
+    color: #888894;
+}
+
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.app-card {
+    padding: 22px;
+    border-radius: 17px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.07);
+}
+
+.app-card strong {
+    display: block;
+    margin-bottom: 7px;
+}
+
+/* FOOTER */
+
+footer {
+    border-top: 1px solid rgba(255,255,255,.08);
+    margin-top: 80px;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 24px;
+    display: flex;
+    justify-content: space-between;
+    color: #686873;
+    font-size: 14px;
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(12px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 430px;
+    background: #111116;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: 0 30px 100px rgba(0,0,0,.6);
+}
+
+.modal-box h2 {
+    margin-bottom: 8px;
+}
+
+.modal-box p {
+    color: #858590;
+    margin-bottom: 25px;
+}
+
+.input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 11px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: #09090c;
+    color: white;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #8b5cf6;
+}
+
+.close {
+    float: right;
+    border: 0;
+    background: transparent;
+    color: #777;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* TOAST */
+
+.toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #17171d;
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 15px 20px;
+    border-radius: 13px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: .3s;
+    z-index: 2000;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* MOBILE */
+
+@media(max-width: 800px) {
+
+    .nav-links button:not(.nav-signup) {
+        display: none;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding-top: 70px;
+    }
+
+    .hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .app-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pricing-box {
+        padding: 35px 20px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<header class="nav">
+<!-- NAVBAR -->
 
-  <a
-    class="brand"
-    href="/">
-    <span>W.</span>
-    W.HUB
-  </a>
+<nav class="navbar">
+    <div class="nav-inner">
 
-  <nav>
+        <a href="#" class="logo">W<span>.</span>HUB</a>
 
-    <button onclick="showStore()">
-      Store
-    </button>
+        <div class="nav-links">
+            <button onclick="scrollToSection('products')">Store</button>
+            <button onclick="scrollToSection('pricing')">Pricing</button>
+            <button onclick="scrollToSection('dashboard')">Dashboard</button>
+            <button class="nav-signup" onclick="openModal()">Create account</button>
+        </div>
 
-    <button onclick="showPricing()">
-      Pricing
-    </button>
-
-    <button onclick="openDashboard()">
-      Dashboard
-    </button>
-
-  </nav>
-
-  <div class="navAccount">
-
-    <button
-      id="authButton"
-      class="primary"
-      onclick="openAuth()">
-      Sign up
-    </button>
-
-  </div>
-
-</header>
+    </div>
+</nav>
 
 
-<main id="store">
+<!-- HERO -->
 
 <section class="hero">
 
-  <div class="heroText">
+    <div>
 
-    <div class="pill">
-      ● W.HUB CREATIVE SUITE
-    </div>
-
-    <h1>
-      Your creativity.
-      <span>One hub.</span>
-    </h1>
-
-    <p>
-      Powerful creative software for video,
-      images and content creation.
-    </p>
-
-    <div class="heroButtons">
-
-      <button
-        class="primary big"
-        onclick="document
-          .getElementById('products')
-          .scrollIntoView()">
-
-        Explore W.HUB
-
-      </button>
-
-      <button
-        class="secondary big"
-        onclick="openAuth()">
-
-        Create account
-
-      </button>
-
-    </div>
-
-  </div>
-
-  <div class="heroCard">
-
-    <div class="windowBar">
-      <i></i>
-      <i></i>
-      <i></i>
-    </div>
-
-    <div class="fakeEditor">
-
-      <aside>
-
-        <b>W.Edits</b>
-
-        <div>↖</div>
-        <div>✂</div>
-        <div>T</div>
-        <div>▣</div>
-        <div>♪</div>
-
-      </aside>
-
-      <section>
-
-        <div class="fakeCanvas">
-          W.
+        <div class="badge">
+            <span class="badge-dot"></span>
+            W.HUB CREATIVE SUITE
         </div>
 
-        <div class="fakeTimeline">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+        <h1>
+            Your creativity.
+            <span class="gradient-text">One hub.</span>
+        </h1>
 
-      </section>
+        <p>
+            Powerful creative software for video editing,
+            image editing and content creation — all in one place.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="btn btn-primary"
+                    onclick="scrollToSection('products')">
+                Explore W.HUB →
+            </button>
+
+            <button class="btn btn-secondary"
+                    onclick="openModal()">
+                Create account
+            </button>
+        </div>
 
     </div>
 
-  </div>
+
+    <div class="hero-card">
+
+        <div class="glow"></div>
+
+        <div class="editor-window">
+
+            <div class="editor-top">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+
+            <div class="editor-body">
+
+                <div class="tools">
+                    <div class="tool"></div>
+                    <div class="tool"></div>
+                    <div class="tool"></div>
+                    <div class="tool"></div>
+                    <div class="tool"></div>
+                </div>
+
+                <div class="canvas-area">
+
+                    <div class="fake-canvas"></div>
+
+                    <div class="fake-timeline">
+                        <div class="timeline-line"></div>
+                        <div class="timeline-line"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<section
-  id="products"
-  class="section">
+<!-- PRODUCTS -->
 
-  <div class="heading">
+<section class="section" id="products">
 
-    <h2>Creative software.</h2>
+    <div class="section-header">
+        <div class="eyebrow">Software</div>
 
-    <p>
-      Buy once or subscribe monthly.
-    </p>
+        <h2>Creative software.</h2>
 
-  </div>
-
-
-  <div class="products">
+        <p>
+            Professional tools without needing ten different apps.
+        </p>
+    </div>
 
 
-    <article class="product">
+    <div class="products">
 
-      <div class="productIcon purple">
-        W.E
-      </div>
+        <!-- W.EDITS -->
 
-      <h3>W.Edits</h3>
+        <div class="product-card">
 
-      <p>
-        Video editing for creators.
-        Import media, edit timelines,
-        add text, audio and effects,
-        then export your work.
-      </p>
+            <div class="product-icon edits-icon">W.E</div>
 
-      <div class="priceGrid">
+            <h3>W.Edits</h3>
 
-        <div>
-          <small>Monthly</small>
-          <strong>£9.99</strong>
+            <p>
+                Video editing software for creators.
+                Build videos, add effects, text, audio and more.
+            </p>
+
+            <ul class="features">
+                <li>Video editing workspace</li>
+                <li>Timeline editing</li>
+                <li>Text & effects</li>
+                <li>Creator-focused workflow</li>
+            </ul>
+
+            <div class="price-row">
+
+                <div class="price">
+                    <small>Monthly</small>
+                    <strong>£9.99</strong>
+                </div>
+
+                <div class="price">
+                    <small>One-time</small>
+                    <strong>£99.99</strong>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary buy-button"
+                    onclick="buy('W.Edits')">
+                Get W.Edits →
+            </button>
+
         </div>
 
-        <div>
-          <small>Once</small>
-          <strong>£99.99</strong>
+
+        <!-- W.PHOTO -->
+
+        <div class="product-card">
+
+            <div class="product-icon photo-icon">W.P</div>
+
+            <h3>W.Photo</h3>
+
+            <p>
+                Image editing and graphic design software
+                for creators and designers.
+            </p>
+
+            <ul class="features">
+                <li>Image editing</li>
+                <li>Colour adjustments</li>
+                <li>Text tools</li>
+                <li>Creative design workspace</li>
+            </ul>
+
+            <div class="price-row">
+
+                <div class="price">
+                    <small>Monthly</small>
+                    <strong>£3.99</strong>
+                </div>
+
+                <div class="price">
+                    <small>One-time</small>
+                    <strong>£19.99</strong>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary buy-button"
+                    onclick="buy('W.Photo')">
+                Get W.Photo →
+            </button>
+
         </div>
 
-      </div>
-
-      <div class="buttons">
-
-        <button
-          class="primary"
-          onclick="buy('W.Edits','monthly')">
-
-          £9.99 / month
-
-        </button>
-
-        <button
-          onclick="buy('W.Edits','once')">
-
-          £99.99 once
-
-        </button>
-
-      </div>
-
-    </article>
-
-
-    <article class="product">
-
-      <div class="productIcon blue">
-        W.P
-      </div>
-
-      <h3>W.Photo</h3>
-
-      <p>
-        Photo editing and graphic design.
-        Import images, adjust colours,
-        add text and export your work.
-      </p>
-
-      <div class="priceGrid">
-
-        <div>
-          <small>Monthly</small>
-          <strong>£3.99</strong>
-        </div>
-
-        <div>
-          <small>Once</small>
-          <strong>£19.99</strong>
-        </div>
-
-      </div>
-
-      <div class="buttons">
-
-        <button
-          class="primary blueButton"
-          onclick="buy('W.Photo','monthly')">
-
-          £3.99 / month
-
-        </button>
-
-        <button
-          onclick="buy('W.Photo','once')">
-
-          £19.99 once
-
-        </button>
-
-      </div>
-
-    </article>
-
-  </div>
+    </div>
 
 </section>
 
 
-<section
-  id="pricing"
-  class="section">
+<!-- PRICING -->
 
-  <div class="heading">
+<section class="section" id="pricing">
 
-    <h2>Simple pricing.</h2>
+    <div class="pricing-box">
 
-    <p>
-      Choose the way you want to own your software.
-    </p>
+        <div class="eyebrow">Pricing</div>
 
-  </div>
+        <h2>Simple pricing.</h2>
 
-  <div class="featureGrid">
+        <p>
+            Subscribe monthly or own your software with a one-time purchase.
+        </p>
 
-    <div>
-      <b>01</b>
-      <h3>Real checkout</h3>
-      <p>
-        Stripe handles the payment.
-      </p>
-    </div>
-
-    <div>
-      <b>02</b>
-      <h3>Real accounts</h3>
-      <p>
-        Your account lives on the server.
-      </p>
-    </div>
-
-    <div>
-      <b>03</b>
-      <h3>Protected downloads</h3>
-      <p>
-        Downloads require ownership.
-      </p>
-    </div>
-
-    <div>
-      <b>04</b>
-      <h3>Persistent purchases</h3>
-      <p>
-        Your purchases stay attached to your account.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<section
-  id="dashboard"
-  class="dashboard hidden">
-
-  <div class="dashboardHeader">
-
-    <div>
-
-      <h1>My W.HUB</h1>
-
-      <p id="userEmail"></p>
+        <button class="btn btn-primary"
+                onclick="scrollToSection('products')">
+            View software →
+        </button>
 
     </div>
-
-    <button onclick="showStore()">
-      ← Store
-    </button>
-
-  </div>
-
-  <div id="dashboardContent"></div>
 
 </section>
 
 
-<div
-  id="authModal"
-  class="modal hidden">
+<!-- DASHBOARD -->
 
-  <div class="modalBox">
+<section class="section" id="dashboard">
 
-    <button
-      class="close"
-      onclick="closeAuth()">
-      ×
-    </button>
+    <div class="section-header">
+        <div class="eyebrow">Your workspace</div>
 
-    <h2 id="authTitle">
-      Create your account
-    </h2>
+        <h2>Dashboard.</h2>
 
-    <p id="authText">
-      Your account stores your W.HUB purchases.
-    </p>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="Email">
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Password">
-
-    <button
-      class="primary full"
-      onclick="submitAuth()">
-
-      Continue
-
-    </button>
-
-    <button
-      class="switch"
-      onclick="switchAuth()"
-      id="switchButton">
-
-      Already have an account? Log in
-
-    </button>
-
-    <div
-      id="authError"
-      class="error">
+        <p>
+            Manage your W.HUB software from one place.
+        </p>
     </div>
 
-  </div>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-item active">
+                Overview
+            </div>
+
+            <div class="sidebar-item">
+                My software
+            </div>
+
+            <div class="sidebar-item">
+                Downloads
+            </div>
+
+            <div class="sidebar-item">
+                Account
+            </div>
+
+        </aside>
+
+
+        <div class="dashboard-content">
+
+            <h3>Welcome to W.HUB</h3>
+
+            <p>
+                Your creative software will appear here.
+            </p>
+
+
+            <div class="app-grid">
+
+                <div class="app-card">
+                    <strong>W.Edits</strong>
+                    <span style="color:#777;">
+                        Video editor
+                    </span>
+                </div>
+
+                <div class="app-card">
+                    <strong>W.Photo</strong>
+                    <span style="color:#777;">
+                        Image editor
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-inner">
+
+        <div>
+            © 2026 W.HUB
+        </div>
+
+        <div>
+            Creative software for creators.
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ACCOUNT MODAL -->
+
+<div class="modal" id="accountModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModal()">×</button>
+
+        <h2>Create your W.HUB account</h2>
+
+        <p>
+            Your account will be used to access your software and purchases.
+        </p>
+
+        <input
+            class="input"
+            id="email"
+            type="email"
+            placeholder="Email address"
+        >
+
+        <input
+            class="input"
+            id="password"
+            type="password"
+            placeholder="Password"
+        >
+
+        <button
+            class="btn btn-primary"
+            style="width:100%;"
+            onclick="createAccount()"
+        >
+            Create account
+        </button>
+
+    </div>
 
 </div>
 
 
-<div
-  id="toast"
-  class="toast hidden">
-</div>
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
 
 
-<script src="/app.js"></script>
+<script>
+
+function scrollToSection(id) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+}
+
+
+function openModal() {
+
+    document
+        .getElementById("accountModal")
+        .classList.add("active");
+
+}
+
+
+function closeModal() {
+
+    document
+        .getElementById("accountModal")
+        .classList.remove("active");
+
+}
+
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
+
+}
+
+
+function createAccount() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    if (!email || !password) {
+
+        showToast("Please enter an email and password.");
+
+        return;
+    }
+
+    if (password.length < 8) {
+
+        showToast("Password must be at least 8 characters.");
+
+        return;
+    }
+
+    /*
+       FRONTEND DEMO ONLY.
+
+       Real W.HUB accounts should be created
+       through your Node.js backend so passwords
+       are securely hashed and stored.
+    */
+
+    showToast("Account interface is ready.");
+
+}
+
+
+function buy(product) {
+
+    /*
+       Real Stripe Checkout must be started
+       by your secure Node.js backend.
+
+       Do NOT put your Stripe secret key
+       inside this HTML file.
+    */
+
+    showToast(
+        product +
+        " checkout will connect to your Stripe backend."
+    );
+
+}
+
+
+document
+    .getElementById("accountModal")
+    .addEventListener("click", function(e) {
+
+        if (e.target === this) {
+            closeModal();
+        }
+
+    });
+
+</script>
 
 </body>
 </html>
