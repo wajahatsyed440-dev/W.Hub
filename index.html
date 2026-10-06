@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1">
+
+<title>W.HUB</title>
+
+<link
+  rel="stylesheet"
+  href="/style.css">
+
+</head>
+
+<body>
+
+<header class="nav">
+
+  <a
+    class="brand"
+    href="/">
+    <span>W.</span>
+    W.HUB
+  </a>
+
+  <nav>
+
+    <button onclick="showStore()">
+      Store
+    </button>
+
+    <button onclick="showPricing()">
+      Pricing
+    </button>
+
+    <button onclick="openDashboard()">
+      Dashboard
+    </button>
+
+  </nav>
+
+  <div class="navAccount">
+
+    <button
+      id="authButton"
+      class="primary"
+      onclick="openAuth()">
+      Sign up
+    </button>
+
+  </div>
+
+</header>
+
+
+<main id="store">
+
+<section class="hero">
+
+  <div class="heroText">
+
+    <div class="pill">
+      ● W.HUB CREATIVE SUITE
+    </div>
+
+    <h1>
+      Your creativity.
+      <span>One hub.</span>
+    </h1>
+
+    <p>
+      Powerful creative software for video,
+      images and content creation.
+    </p>
+
+    <div class="heroButtons">
+
+      <button
+        class="primary big"
+        onclick="document
+          .getElementById('products')
+          .scrollIntoView()">
+
+        Explore W.HUB
+
+      </button>
+
+      <button
+        class="secondary big"
+        onclick="openAuth()">
+
+        Create account
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="heroCard">
+
+    <div class="windowBar">
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+
+    <div class="fakeEditor">
+
+      <aside>
+
+        <b>W.Edits</b>
+
+        <div>↖</div>
+        <div>✂</div>
+        <div>T</div>
+        <div>▣</div>
+        <div>♪</div>
+
+      </aside>
+
+      <section>
+
+        <div class="fakeCanvas">
+          W.
+        </div>
+
+        <div class="fakeTimeline">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section
+  id="products"
+  class="section">
+
+  <div class="heading">
+
+    <h2>Creative software.</h2>
+
+    <p>
+      Buy once or subscribe monthly.
+    </p>
+
+  </div>
+
+
+  <div class="products">
+
+
+    <article class="product">
+
+      <div class="productIcon purple">
+        W.E
+      </div>
+
+      <h3>W.Edits</h3>
+
+      <p>
+        Video editing for creators.
+        Import media, edit timelines,
+        add text, audio and effects,
+        then export your work.
+      </p>
+
+      <div class="priceGrid">
+
+        <div>
+          <small>Monthly</small>
+          <strong>£9.99</strong>
+        </div>
+
+        <div>
+          <small>Once</small>
+          <strong>£99.99</strong>
+        </div>
+
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="primary"
+          onclick="buy('W.Edits','monthly')">
+
+          £9.99 / month
+
+        </button>
+
+        <button
+          onclick="buy('W.Edits','once')">
+
+          £99.99 once
+
+        </button>
+
+      </div>
+
+    </article>
+
+
+    <article class="product">
+
+      <div class="productIcon blue">
+        W.P
+      </div>
+
+      <h3>W.Photo</h3>
+
+      <p>
+        Photo editing and graphic design.
+        Import images, adjust colours,
+        add text and export your work.
+      </p>
+
+      <div class="priceGrid">
+
+        <div>
+          <small>Monthly</small>
+          <strong>£3.99</strong>
+        </div>
+
+        <div>
+          <small>Once</small>
+          <strong>£19.99</strong>
+        </div>
+
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="primary blueButton"
+          onclick="buy('W.Photo','monthly')">
+
+          £3.99 / month
+
+        </button>
+
+        <button
+          onclick="buy('W.Photo','once')">
+
+          £19.99 once
+
+        </button>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<section
+  id="pricing"
+  class="section">
+
+  <div class="heading">
+
+    <h2>Simple pricing.</h2>
+
+    <p>
+      Choose the way you want to own your software.
+    </p>
+
+  </div>
+
+  <div class="featureGrid">
+
+    <div>
+      <b>01</b>
+      <h3>Real checkout</h3>
+      <p>
+        Stripe handles the payment.
+      </p>
+    </div>
+
+    <div>
+      <b>02</b>
+      <h3>Real accounts</h3>
+      <p>
+        Your account lives on the server.
+      </p>
+    </div>
+
+    <div>
+      <b>03</b>
+      <h3>Protected downloads</h3>
+      <p>
+        Downloads require ownership.
+      </p>
+    </div>
+
+    <div>
+      <b>04</b>
+      <h3>Persistent purchases</h3>
+      <p>
+        Your purchases stay attached to your account.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<section
+  id="dashboard"
+  class="dashboard hidden">
+
+  <div class="dashboardHeader">
+
+    <div>
+
+      <h1>My W.HUB</h1>
+
+      <p id="userEmail"></p>
+
+    </div>
+
+    <button onclick="showStore()">
+      ← Store
+    </button>
+
+  </div>
+
+  <div id="dashboardContent"></div>
+
+</section>
+
+
+<div
+  id="authModal"
+  class="modal hidden">
+
+  <div class="modalBox">
+
+    <button
+      class="close"
+      onclick="closeAuth()">
+      ×
+    </button>
+
+    <h2 id="authTitle">
+      Create your account
+    </h2>
+
+    <p id="authText">
+      Your account stores your W.HUB purchases.
+    </p>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Email">
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Password">
+
+    <button
+      class="primary full"
+      onclick="submitAuth()">
+
+      Continue
+
+    </button>
+
+    <button
+      class="switch"
+      onclick="switchAuth()"
+      id="switchButton">
+
+      Already have an account? Log in
+
+    </button>
+
+    <div
+      id="authError"
+      class="error">
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast hidden">
+</div>
+
+
+<script src="/app.js"></script>
+
+</body>
+</html>
